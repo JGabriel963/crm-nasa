@@ -1,0 +1,1647 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRM N.A.S.A — Plano 90 Dias · Francisco</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #080808;
+        --surface: #111111;
+        --surface2: #191919;
+        --border: rgba(255, 255, 255, 0.06);
+        --border2: rgba(255, 255, 255, 0.11);
+        --text: #ede9e3;
+        --muted: #5e5b57;
+        --subtle: #2a2826;
+        --blue: #4a9eff;
+        --blue-dim: rgba(74, 158, 255, 0.1);
+        --amber: #f5a623;
+        --amber-dim: rgba(245, 166, 35, 0.1);
+        --green: #34d27a;
+        --green-dim: rgba(52, 210, 122, 0.1);
+        --red: #f05252;
+        --red-dim: rgba(240, 82, 82, 0.1);
+        --accent: #d4b483;
+        --accent2: #e8cfa0;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ═══ LOGIN ═══ */
+      #login-screen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: var(--bg);
+        transition:
+          opacity 0.45s ease,
+          transform 0.45s ease;
+      }
+      #login-screen.hiding {
+        opacity: 0;
+        transform: scale(0.97);
+        pointer-events: none;
+      }
+
+      .login-wrap {
+        width: 100%;
+        max-width: 360px;
+        padding: 1rem;
+      }
+      .login-eyebrow {
+        font-family: "Syne", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .login-eyebrow::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border2);
+      }
+      .login-eyebrow span {
+        color: var(--accent);
+      }
+
+      .login-box {
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        padding: 2rem 2rem 2.25rem;
+      }
+      .login-title {
+        font-family: "Syne", sans-serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 0.4rem;
+        line-height: 1.15;
+      }
+      .login-sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .pin-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+      .pin-row {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 1.5rem;
+      }
+      .pin-input {
+        flex: 1;
+        min-width: 0;
+        height: 58px;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+        font-family: "Syne", sans-serif;
+        box-sizing: border-box;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        text-align: center;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        caret-color: transparent;
+        -webkit-text-security: disc;
+      }
+      .pin-input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(212, 180, 131, 0.12);
+      }
+      .pin-input.shake {
+        animation: shake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        border-color: var(--red) !important;
+      }
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translateX(-2px);
+        }
+        20%,
+        80% {
+          transform: translateX(4px);
+        }
+        30%,
+        50%,
+        70% {
+          transform: translateX(-5px);
+        }
+        40%,
+        60% {
+          transform: translateX(5px);
+        }
+      }
+
+      .enter-btn {
+        width: 100%;
+        height: 48px;
+        background: var(--accent);
+        border: none;
+        border-radius: 12px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #150f00;
+        cursor: pointer;
+        transition:
+          opacity 0.18s,
+          transform 0.15s;
+        position: relative;
+        overflow: hidden;
+      }
+      .enter-btn:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+      }
+      .enter-btn:active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .pin-error {
+        font-size: 12px;
+        color: var(--red);
+        text-align: center;
+        margin-top: 0.875rem;
+        min-height: 18px;
+        transition: opacity 0.2s;
+      }
+
+      /* ═══ APP ═══ */
+      #app {
+        display: none;
+      }
+      #app.on {
+        display: block;
+        animation: appIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      @keyframes appIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* Topbar */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        height: 52px;
+        background: rgba(8, 8, 8, 0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        padding: 0 1.25rem;
+        gap: 0.75rem;
+      }
+      .topbar-logo {
+        font-family: "Syne", sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+      }
+      .topbar-sep {
+        width: 1px;
+        height: 16px;
+        background: var(--border2);
+      }
+      .topbar-name {
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .topbar-spacer {
+        flex: 1;
+      }
+      .sync-indicator {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .sync-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--muted);
+        transition: background 0.3s;
+      }
+      .sync-dot.synced {
+        background: var(--green);
+      }
+      .sync-dot.syncing {
+        background: var(--amber);
+        animation: pulse 1s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .logout-btn {
+        padding: 4px 12px;
+        background: transparent;
+        border: 1px solid var(--border2);
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 11px;
+        cursor: pointer;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+        font-family: "DM Sans", sans-serif;
+      }
+      .logout-btn:hover {
+        color: var(--text);
+        border-color: var(--border2);
+      }
+
+      /* Container */
+      .page {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 1.75rem 1.25rem 5rem;
+      }
+
+      /* Hero */
+      .hero {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.75rem;
+      }
+      .hero-eyebrow {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.625rem;
+      }
+      .hero-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(24px, 5.5vw, 40px);
+        font-weight: 800;
+        line-height: 1.08;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+      }
+      .hero-title em {
+        color: var(--accent2);
+        font-style: normal;
+      }
+      .hero-meta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Summary */
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-bottom: 1.75rem;
+      }
+      @media (max-width: 580px) {
+        .summary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .s-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 0.875rem 1rem;
+      }
+      .s-lbl {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        margin-bottom: 5px;
+      }
+      .s-val {
+        font-family: "Syne", sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1;
+      }
+      .s-val.c-green {
+        color: var(--green);
+      }
+      .s-val.c-amber {
+        color: var(--amber);
+      }
+      .s-track {
+        height: 2px;
+        background: var(--subtle);
+        border-radius: 1px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+      .s-fill {
+        height: 100%;
+        background: var(--green);
+        border-radius: 1px;
+        transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 1.5rem;
+        overflow-x: auto;
+        padding-bottom: 1px;
+        scrollbar-width: none;
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-btn {
+        padding: 6px 16px;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.15s;
+      }
+      .tab-btn:hover {
+        color: var(--text);
+        border-color: var(--border2);
+      }
+      .tab-btn.active {
+        background: var(--accent);
+        color: #150f00;
+        border-color: var(--accent);
+      }
+
+      /* Phase */
+      .phase-block {
+        margin-bottom: 1.25rem;
+      }
+      .phase-block[hidden] {
+        display: none;
+      }
+
+      .phase-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.75rem 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.18s;
+        margin-bottom: 6px;
+      }
+      .phase-header:hover {
+        border-color: var(--border2);
+      }
+
+      .mes-pill {
+        font-family: "Syne", sans-serif;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 20px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .pill-blue {
+        background: var(--blue-dim);
+        color: var(--blue);
+      }
+      .pill-amber {
+        background: var(--amber-dim);
+        color: var(--amber);
+      }
+      .pill-green {
+        background: var(--green-dim);
+        color: var(--green);
+      }
+
+      .phase-title-txt {
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .phase-week {
+        font-size: 10px;
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+      .phase-pct {
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        flex-shrink: 0;
+        min-width: 30px;
+        text-align: right;
+      }
+      .phase-pct.full {
+        color: var(--green);
+      }
+      .chevron {
+        font-size: 10px;
+        color: var(--muted);
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      .phase-header.collapsed .chevron {
+        transform: rotate(-90deg);
+      }
+
+      .actions-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      /* Action row */
+      .a-row {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 8px;
+        align-items: center;
+        padding: 0.75rem 0.875rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        transition:
+          border-color 0.18s,
+          background 0.18s;
+      }
+      .a-row:hover {
+        border-color: var(--border2);
+      }
+      .a-row.st-concluida {
+        border-color: rgba(52, 210, 122, 0.18);
+        background: rgba(52, 210, 122, 0.03);
+      }
+      .a-row.st-andamento {
+        border-color: rgba(245, 166, 35, 0.15);
+        background: rgba(245, 166, 35, 0.03);
+      }
+      .a-row.st-bloqueada {
+        border-color: rgba(240, 82, 82, 0.15);
+        background: rgba(240, 82, 82, 0.03);
+      }
+
+      .a-info {
+        min-width: 0;
+      }
+      .a-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.3;
+        margin-bottom: 2px;
+      }
+      .a-row.st-concluida .a-name {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+      .a-dot {
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        margin-right: 5px;
+        flex-shrink: 0;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+      .dot-h {
+        background: var(--red);
+      }
+      .dot-m {
+        background: var(--amber);
+      }
+      .dot-l {
+        background: var(--green);
+      }
+
+      .a-detail {
+        font-size: 11px;
+        color: var(--muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .a-week-tag {
+        font-family: "Syne", sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+        background: var(--surface2);
+        padding: 3px 7px;
+        border-radius: 6px;
+        white-space: nowrap;
+      }
+
+      .status-select {
+        appearance: none;
+        -webkit-appearance: none;
+        border: 1px solid var(--border2);
+        background: var(--surface2);
+        color: var(--muted);
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 5px 9px;
+        border-radius: 8px;
+        cursor: pointer;
+        outline: none;
+        transition:
+          border-color 0.18s,
+          color 0.18s;
+        min-width: 112px;
+        text-align: center;
+      }
+      .status-select:focus {
+        border-color: var(--accent);
+      }
+      .status-select.sel-andamento {
+        color: var(--amber);
+        border-color: rgba(245, 166, 35, 0.3);
+      }
+      .status-select.sel-concluida {
+        color: var(--green);
+        border-color: rgba(52, 210, 122, 0.3);
+      }
+      .status-select.sel-bloqueada {
+        color: var(--red);
+        border-color: rgba(240, 82, 82, 0.3);
+      }
+
+      /* KPI */
+      .section-head {
+        font-family: "Syne", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 2.25rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      @media (max-width: 500px) {
+        .kpi-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .kpi-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        padding: 0.75rem 0.875rem;
+      }
+      .kpi-lbl {
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .kpi-val {
+        font-family: "Syne", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+      }
+      .kpi-meta {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+      .kpi-track {
+        height: 2px;
+        background: var(--subtle);
+        border-radius: 1px;
+        overflow: hidden;
+        margin-top: 7px;
+      }
+      .kpi-fill {
+        height: 100%;
+        border-radius: 1px;
+        background: var(--green);
+        transition: width 0.6s;
+      }
+
+      /* P.L.E.N.O */
+      .pleno-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 7px;
+      }
+      @media (max-width: 450px) {
+        .pleno-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .pleno-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        padding: 0.875rem 0.625rem;
+        text-align: center;
+      }
+      .pleno-letter {
+        font-family: "Syne", sans-serif;
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--accent2);
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+      .pleno-word {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text);
+        line-height: 1.3;
+      }
+      .pleno-det {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      /* Footer */
+      .footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .footer-brand {
+        font-family: "Syne", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .footer-brand span {
+        color: var(--accent);
+      }
+      .footer-meta {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 1.25rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(60px);
+        background: var(--surface);
+        border: 1px solid var(--green);
+        color: var(--green);
+        padding: 7px 18px;
+        border-radius: 40px;
+        font-size: 12px;
+        font-weight: 500;
+        z-index: 999;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Loading overlay */
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        transition: opacity 0.3s;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .loading-overlay.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loading-spinner {
+        width: 28px;
+        height: 28px;
+        border: 2px solid var(--border2);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loading-txt {
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading overlay (shown briefly on first sync) -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-txt">Carregando progresso...</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-screen">
+      <div class="login-wrap">
+        <div class="login-eyebrow">Método <span>N.A.S.A</span> · Workspace</div>
+        <div class="login-box">
+          <div class="login-title">Plano 90 Dias<br />Autopeças</div>
+          <div class="login-sub">
+            Francisco · Teresina, PI<br />Insira o código de acesso de 4
+            dígitos.
+          </div>
+          <div class="pin-label">Código de acesso</div>
+          <div class="pin-row" id="pin-row">
+            <input
+              class="pin-input"
+              type="tel"
+              inputmode="numeric"
+              maxlength="1"
+              id="p0"
+              autocomplete="off"
+            />
+            <input
+              class="pin-input"
+              type="tel"
+              inputmode="numeric"
+              maxlength="1"
+              id="p1"
+              autocomplete="off"
+            />
+            <input
+              class="pin-input"
+              type="tel"
+              inputmode="numeric"
+              maxlength="1"
+              id="p2"
+              autocomplete="off"
+            />
+            <input
+              class="pin-input"
+              type="tel"
+              inputmode="numeric"
+              maxlength="1"
+              id="p3"
+              autocomplete="off"
+            />
+          </div>
+          <button class="enter-btn" id="enter-btn" onclick="tryLogin()">
+            Acessar →
+          </button>
+          <div class="pin-error" id="pin-error"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">✓ Progresso sincronizado</div>
+
+    <!-- APP -->
+    <div id="app">
+      <div class="topbar">
+        <div class="topbar-logo">N.A.S.A</div>
+        <div class="topbar-sep"></div>
+        <div class="topbar-name">Francisco · Autopeças</div>
+        <div class="topbar-spacer"></div>
+        <div class="sync-indicator">
+          <div class="sync-dot" id="sync-dot"></div>
+          <span id="sync-lbl">—</span>
+        </div>
+        <div style="width: 8px"></div>
+        <button class="logout-btn" onclick="doLogout()">Sair</button>
+      </div>
+
+      <div class="page">
+        <div class="hero">
+          <div class="hero-eyebrow">Acompanhamento estratégico · 90 dias</div>
+          <div class="hero-title">
+            CRM N.A.S.A —<br /><em>Plano Francisco</em>
+          </div>
+          <div class="hero-meta">
+            Balcão Físico · Teresina · 8 fases · 24 ações · sincronizado em
+            tempo real
+          </div>
+        </div>
+
+        <div class="summary">
+          <div class="s-card">
+            <div class="s-lbl">Total de ações</div>
+            <div class="s-val" id="st-total">24</div>
+          </div>
+          <div class="s-card">
+            <div class="s-lbl">Concluídas</div>
+            <div class="s-val c-green" id="st-done">0</div>
+          </div>
+          <div class="s-card">
+            <div class="s-lbl">Em andamento</div>
+            <div class="s-val c-amber" id="st-prog">0</div>
+          </div>
+          <div class="s-card">
+            <div class="s-lbl">Progresso geral</div>
+            <div class="s-val" id="st-pct">0%</div>
+            <div class="s-track">
+              <div class="s-fill" id="st-bar" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="setTab('all', this)">
+            Todas
+          </button>
+          <button class="tab-btn" onclick="setTab('m1', this)">
+            Mês 1 — Fundação
+          </button>
+          <button class="tab-btn" onclick="setTab('m2', this)">
+            Mês 2 — Comercial
+          </button>
+          <button class="tab-btn" onclick="setTab('m3', this)">
+            Mês 3 — Escala
+          </button>
+        </div>
+
+        <div id="phases-out"></div>
+
+        <div class="section-head">Indicadores de evolução</div>
+        <div class="kpi-grid" id="kpi-out"></div>
+
+        <div class="section-head">Método P.L.E.N.O</div>
+        <div class="pleno-grid" id="pleno-out"></div>
+
+        <div class="footer">
+          <div class="footer-brand">Método <span>N.A.S.A</span></div>
+          <div class="footer-meta">
+            Necessidade · Análise · Sistematização · Ação
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ══════════════════════════════════════
+   DATA
+══════════════════════════════════════ */
+      const PIN = "1245";
+      const STORE_KEY = "nasa_plano90_francisco_v1";
+
+      const PHASES = [
+        {
+          id: "p1",
+          mes: "m1",
+          cor: "blue",
+          label: "Diagnóstico e Necessidade",
+          sem: "S1",
+          items: [
+            {
+              n: "Diagnóstico Comercial completo",
+              d: "Ticket médio, mix, encalhados, margem, conversão balcão",
+              s: "S1",
+              p: "h",
+            },
+            {
+              n: "Análise GAP e Mapa de Posicionamento",
+              d: "Onde estamos vs onde queremos chegar",
+              s: "S1",
+              p: "h",
+            },
+          ],
+        },
+        {
+          id: "p2",
+          mes: "m1",
+          cor: "blue",
+          label: "Organização de Estoque",
+          sem: "S2–S3",
+          items: [
+            {
+              n: "Inventário geral — contagem real",
+              d: "Correção de sistema + separação por categoria",
+              s: "S2",
+              p: "h",
+            },
+            {
+              n: "Lógica de armazenagem",
+              d: "Etiquetas + endereçamento Rua/Coluna/Nível",
+              s: "S2",
+              p: "h",
+            },
+            {
+              n: "Estoque mínimo e ponto de reposição",
+              d: "Kanban físico + ERP ou planilha estruturada",
+              s: "S3",
+              p: "m",
+            },
+            {
+              n: "OKRs de organização — Mês 1",
+              d: "Metas mensuráveis para estoque organizado",
+              s: "S3",
+              p: "m",
+            },
+          ],
+        },
+        {
+          id: "p3",
+          mes: "m1",
+          cor: "blue",
+          label: "Visibilidade Física",
+          sem: "S4",
+          items: [
+            {
+              n: "Painel 2x1 — Av. Miguel Rosa",
+              d: "WhatsApp visível + QR Code + destaque elétricos",
+              s: "S4",
+              p: "m",
+            },
+          ],
+        },
+        {
+          id: "p4",
+          mes: "m2",
+          cor: "amber",
+          label: "Estrutura Comercial de Balcão",
+          sem: "S5–S6",
+          items: [
+            {
+              n: "Script de atendimento balcão",
+              d: "Diagnóstico, complemento, upsell técnico, garantia",
+              s: "S5",
+              p: "h",
+            },
+            {
+              n: "Treinamento SPIN — autopeças",
+              d: "Venda consultiva + meta individual por vendedor",
+              s: "S5",
+              p: "h",
+            },
+            {
+              n: "KPI Dashboard semanal",
+              d: "Ticket · Conversão · Margem · Itens/venda",
+              s: "S6",
+              p: "h",
+            },
+            {
+              n: "Matriz de Eisenhower",
+              d: "Classificar iniciativas por urgência e impacto",
+              s: "S6",
+              p: "m",
+            },
+          ],
+        },
+        {
+          id: "p5",
+          mes: "m2",
+          cor: "amber",
+          label: "Mercado Livre",
+          sem: "S6–S7",
+          items: [
+            {
+              n: "Conta e catálogo — Mercado Livre",
+              d: "SEO no título: modelo + ano + peça",
+              s: "S6",
+              p: "h",
+            },
+            {
+              n: "Padronização de fotos",
+              d: "Fundo neutro + ângulo frontal + marca d'água",
+              s: "S7",
+              p: "m",
+            },
+            {
+              n: "Política de envio e precificação",
+              d: "Margem ajustada para giro + regras claras",
+              s: "S7",
+              p: "m",
+            },
+          ],
+        },
+        {
+          id: "p6",
+          mes: "m2",
+          cor: "amber",
+          label: "Tráfego Pago Local",
+          sem: "S7–S8",
+          items: [
+            {
+              n: "Google Ads — busca local Teresina",
+              d: "autopeças Teresina + peças automotivas PI",
+              s: "S7",
+              p: "h",
+            },
+            {
+              n: "Meta Ads — raio 5 a 8 km",
+              d: "Campanha institucional + oferta por categoria",
+              s: "S8",
+              p: "m",
+            },
+          ],
+        },
+        {
+          id: "p7",
+          mes: "m3",
+          cor: "green",
+          label: "Posicionamento em Elétricos",
+          sem: "S9–S10",
+          items: [
+            {
+              n: "Pesquisa demanda — oficinas EV Teresina",
+              d: "Frota crescente + peças mais difíceis de encontrar",
+              s: "S9",
+              p: "h",
+            },
+            {
+              n: "Categoria exclusiva de elétricos",
+              d: "Prateleira física + seção digital identificada",
+              s: "S9",
+              p: "m",
+            },
+            {
+              n: "Reels elétricos — Instagram técnico",
+              d: "Comparação peça comum x elétrica + segurança",
+              s: "S10",
+              p: "m",
+            },
+            {
+              n: "Conteúdo educativo — Série EV",
+              d: "3 reels: diagnóstico, bateria, manutenção",
+              s: "S10",
+              p: "l",
+            },
+          ],
+        },
+        {
+          id: "p8",
+          mes: "m3",
+          cor: "green",
+          label: "Consolidação e Expansão",
+          sem: "S11–S12",
+          items: [
+            {
+              n: "Clube de Oficinas",
+              d: "Desconto progressivo + prioridade + canal WhatsApp",
+              s: "S11",
+              p: "h",
+            },
+            {
+              n: "CRM N.A.S.A — cadastro obrigatório",
+              d: "Histórico de compra + campanhas mensais",
+              s: "S11",
+              p: "h",
+            },
+            {
+              n: "Planejamento Q2 — expansão digital",
+              d: "Aumentar mix elétrico + melhorar margem",
+              s: "S12",
+              p: "m",
+            },
+            {
+              n: "Review geral dos 90 dias",
+              d: "Comparar indicadores iniciais vs finais",
+              s: "S12",
+              p: "h",
+            },
+          ],
+        },
+      ];
+
+      const KPIS = [
+        { l: "Estoque organizado", meta: 100, u: "%" },
+        { l: "Redução de parados", meta: 40, u: "%" },
+        { l: "Aumento ticket médio", meta: 25, u: "%" },
+        { l: "Canal digital ativo", meta: 100, u: "%" },
+        { l: "Oficinas no clube", meta: 20, u: " un" },
+        { l: "Margem média", meta: 30, u: "%" },
+      ];
+
+      const PLENO = [
+        { l: "P", w: "Posicionamento", d: "Elétricos" },
+        { l: "L", w: "Logística", d: "Estoque e fluxo" },
+        { l: "E", w: "Estrutura", d: "Comercial" },
+        { l: "N", w: "Novos Canais", d: "ML + Tráfego" },
+        { l: "O", w: "Otimização", d: "Indicadores" },
+      ];
+
+      /* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+      let statusMap = {};
+      PHASES.forEach((ph) =>
+        ph.items.forEach((_, i) => {
+          statusMap[ph.id + "_" + i] = "Pendente";
+        }),
+      );
+
+      let isLoggedIn = false;
+      let pollTimer = null;
+      let isSaving = false;
+
+      /* ══════════════════════════════════════
+   STORAGE (shared via window.storage)
+══════════════════════════════════════ */
+      async function loadFromStorage() {
+        try {
+          const result = await window.storage.get(STORE_KEY, true); // shared=true
+          if (result && result.value) {
+            const saved = JSON.parse(result.value);
+            Object.keys(saved).forEach((k) => {
+              if (statusMap.hasOwnProperty(k)) statusMap[k] = saved[k];
+            });
+          }
+        } catch (e) {
+          // No data yet or storage unavailable — use defaults
+        }
+      }
+
+      async function saveToStorage() {
+        if (isSaving) return;
+        isSaving = true;
+        setSyncState("syncing");
+        try {
+          await window.storage.set(STORE_KEY, JSON.stringify(statusMap), true); // shared=true
+          setSyncState("synced");
+          showToast("✓ Progresso sincronizado");
+        } catch (e) {
+          setSyncState("error");
+          showToast("⚠ Erro ao salvar");
+        }
+        isSaving = false;
+      }
+
+      async function pollStorage() {
+        if (!isLoggedIn) return;
+        try {
+          const result = await window.storage.get(STORE_KEY, true);
+          if (result && result.value) {
+            const remote = JSON.parse(result.value);
+            let changed = false;
+            Object.keys(remote).forEach((k) => {
+              if (statusMap.hasOwnProperty(k) && statusMap[k] !== remote[k]) {
+                statusMap[k] = remote[k];
+                changed = true;
+              }
+            });
+            if (changed) {
+              rebuildAll();
+              setSyncState("synced");
+            }
+          }
+        } catch (e) {}
+      }
+
+      function setSyncState(state) {
+        const dot = document.getElementById("sync-dot");
+        const lbl = document.getElementById("sync-lbl");
+        dot.className = "sync-dot";
+        if (state === "synced") {
+          dot.classList.add("synced");
+          lbl.textContent = "Sincronizado";
+        }
+        if (state === "syncing") {
+          dot.classList.add("syncing");
+          lbl.textContent = "Salvando...";
+        }
+        if (state === "error") {
+          lbl.textContent = "Erro";
+        }
+      }
+
+      /* ══════════════════════════════════════
+   LOGIN
+══════════════════════════════════════ */
+      document.addEventListener("DOMContentLoaded", () => {
+        // Hide loading immediately — show login
+        document.getElementById("loading-overlay").classList.add("hide");
+        setTimeout(
+          () =>
+            (document.getElementById("loading-overlay").style.display = "none"),
+          300,
+        );
+        // PIN setup
+        const inputs = [0, 1, 2, 3].map((i) =>
+          document.getElementById("p" + i),
+        );
+        inputs.forEach((el, i) => {
+          el.addEventListener("input", () => {
+            el.value = el.value.replace(/\D/g, "").slice(-1);
+            if (el.value && i < 3) inputs[i + 1].focus();
+            if (el.value && i === 3) tryLogin();
+          });
+          el.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !el.value && i > 0)
+              inputs[i - 1].focus();
+            if (e.key === "Enter") tryLogin();
+          });
+        });
+        inputs[0].focus();
+      });
+
+      async function tryLogin() {
+        const pin = [0, 1, 2, 3]
+          .map((i) => document.getElementById("p" + i).value)
+          .join("");
+        if (pin !== PIN) {
+          document.getElementById("pin-error").textContent =
+            "Código incorreto. Tente novamente.";
+          document.querySelectorAll(".pin-input").forEach((el) => {
+            el.value = "";
+            el.classList.add("shake");
+            setTimeout(() => el.classList.remove("shake"), 400);
+          });
+          document.getElementById("p0").focus();
+          return;
+        }
+
+        // Show loading while fetching shared state
+        document.getElementById("loading-overlay").style.display = "flex";
+        document.getElementById("loading-overlay").classList.remove("hide");
+
+        // Hide login
+        document.getElementById("login-screen").classList.add("hiding");
+
+        // Load shared data
+        await loadFromStorage();
+
+        // Launch app
+        setTimeout(() => {
+          document.getElementById("login-screen").style.display = "none";
+          document.getElementById("loading-overlay").classList.add("hide");
+          setTimeout(
+            () =>
+              (document.getElementById("loading-overlay").style.display =
+                "none"),
+            300,
+          );
+          document.getElementById("app").classList.add("on");
+          isLoggedIn = true;
+          buildAll();
+          setSyncState("synced");
+          // Poll every 12 seconds
+          pollTimer = setInterval(pollStorage, 12000);
+        }, 500);
+      }
+
+      function doLogout() {
+        isLoggedIn = false;
+        clearInterval(pollTimer);
+        document.getElementById("app").classList.remove("on");
+        document.getElementById("login-screen").style.display = "flex";
+        document.getElementById("login-screen").classList.remove("hiding");
+        document
+          .querySelectorAll(".pin-input")
+          .forEach((el) => (el.value = ""));
+        document.getElementById("pin-error").textContent = "";
+        document.getElementById("p0").focus();
+      }
+
+      /* ══════════════════════════════════════
+   BUILD UI
+══════════════════════════════════════ */
+      let currentTab = "all";
+
+      function buildAll() {
+        buildPhases();
+        buildKPIs();
+        buildPleno();
+        updateSummary();
+      }
+
+      function rebuildAll() {
+        // Refresh selects and row classes without full rebuild
+        PHASES.forEach((ph) => {
+          ph.items.forEach((_, i) => {
+            const key = ph.id + "_" + i;
+            const row = document.getElementById("ar_" + key);
+            const sel = document.getElementById("sel_" + key);
+            if (!row || !sel) return;
+            const st = statusMap[key];
+            sel.value = st;
+            applySelectClass(sel, st);
+            applyRowClass(row, st);
+          });
+          updatePhaseProgress(ph);
+        });
+        updateSummary();
+        buildKPIs();
+      }
+
+      function setTab(tab, btn) {
+        currentTab = tab;
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(".phase-block").forEach((bl) => {
+          if (tab === "all" || bl.dataset.mes === tab)
+            bl.removeAttribute("hidden");
+          else bl.setAttribute("hidden", "");
+        });
+      }
+
+      function buildPhases() {
+        const out = document.getElementById("phases-out");
+        out.innerHTML = "";
+        PHASES.forEach((ph) => {
+          const block = document.createElement("div");
+          block.className = "phase-block";
+          block.id = "pb_" + ph.id;
+          block.dataset.mes = ph.mes;
+          out.appendChild(block);
+
+          // header
+          const hdr = document.createElement("div");
+          hdr.className = "phase-header";
+          hdr.id = "phdr_" + ph.id;
+          hdr.onclick = () => togglePhase(ph.id);
+
+          const mesLabel = { m1: "Mês 1", m2: "Mês 2", m3: "Mês 3" }[ph.mes];
+          const done = ph.items.filter(
+            (_, i) => statusMap[ph.id + "_" + i] === "Concluída",
+          ).length;
+          const pct = Math.round((done / ph.items.length) * 100);
+
+          hdr.innerHTML = `
+      <span class="mes-pill pill-${ph.cor}">${mesLabel}</span>
+      <span class="phase-title-txt">${ph.label}</span>
+      <span class="phase-week">${ph.sem}</span>
+      <span class="phase-pct${pct === 100 ? " full" : ""}" id="ppct_${ph.id}">${pct}%</span>
+      <span class="chevron">▾</span>
+    `;
+          block.appendChild(hdr);
+
+          // actions
+          const wrap = document.createElement("div");
+          wrap.className = "actions-wrap";
+          wrap.id = "aw_" + ph.id;
+          ph.items.forEach((item, i) => {
+            wrap.appendChild(makeActionRow(ph, item, i));
+          });
+          block.appendChild(wrap);
+        });
+      }
+
+      function makeActionRow(ph, item, i) {
+        const key = ph.id + "_" + i;
+        const st = statusMap[key];
+        const row = document.createElement("div");
+        row.id = "ar_" + key;
+        row.className = "a-row";
+        applyRowClass(row, st);
+
+        const dotClass = { h: "dot-h", m: "dot-m", l: "dot-l" }[item.p];
+
+        row.innerHTML = `
+    <div class="a-info">
+      <div class="a-name"><span class="a-dot ${dotClass}"></span>${item.n}</div>
+      <div class="a-detail">${item.d}</div>
+    </div>
+    <span class="a-week-tag">${item.s}</span>
+    <select class="status-select" id="sel_${key}" data-key="${key}" onchange="onStatusChange(this)">
+      <option>Pendente</option>
+      <option>Em andamento</option>
+      <option>Concluída</option>
+      <option>Bloqueada</option>
+    </select>
+  `;
+        const sel = row.querySelector("select");
+        sel.value = st;
+        applySelectClass(sel, st);
+        return row;
+      }
+
+      function togglePhase(id) {
+        const hdr = document.getElementById("phdr_" + id);
+        const wrap = document.getElementById("aw_" + id);
+        hdr.classList.toggle("collapsed");
+        wrap.style.display = hdr.classList.contains("collapsed")
+          ? "none"
+          : "flex";
+      }
+
+      async function onStatusChange(sel) {
+        const key = sel.dataset.key;
+        const st = sel.value;
+        statusMap[key] = st;
+
+        const row = document.getElementById("ar_" + key);
+        applyRowClass(row, st);
+        applySelectClass(sel, st);
+
+        const phId = key.split("_")[0];
+        const ph = PHASES.find((p) => p.id === phId);
+        updatePhaseProgress(ph);
+        updateSummary();
+        buildKPIs();
+
+        await saveToStorage();
+      }
+
+      function updatePhaseProgress(ph) {
+        const done = ph.items.filter(
+          (_, i) => statusMap[ph.id + "_" + i] === "Concluída",
+        ).length;
+        const pct = Math.round((done / ph.items.length) * 100);
+        const el = document.getElementById("ppct_" + ph.id);
+        if (el) {
+          el.textContent = pct + "%";
+          el.className = "phase-pct" + (pct === 100 ? " full" : "");
+        }
+      }
+
+      function applyRowClass(row, st) {
+        row.className = "a-row";
+        if (st === "Concluída") row.classList.add("st-concluida");
+        else if (st === "Em andamento") row.classList.add("st-andamento");
+        else if (st === "Bloqueada") row.classList.add("st-bloqueada");
+      }
+
+      function applySelectClass(sel, st) {
+        sel.className = "status-select";
+        if (st === "Em andamento") sel.classList.add("sel-andamento");
+        else if (st === "Concluída") sel.classList.add("sel-concluida");
+        else if (st === "Bloqueada") sel.classList.add("sel-bloqueada");
+      }
+
+      function updateSummary() {
+        const all = Object.keys(statusMap);
+        const done = all.filter((k) => statusMap[k] === "Concluída").length;
+        const prog = all.filter((k) => statusMap[k] === "Em andamento").length;
+        const pct = Math.round((done / all.length) * 100);
+        document.getElementById("st-total").textContent = all.length;
+        document.getElementById("st-done").textContent = done;
+        document.getElementById("st-prog").textContent = prog;
+        document.getElementById("st-pct").textContent = pct + "%";
+        document.getElementById("st-bar").style.width = pct + "%";
+      }
+
+      function buildKPIs() {
+        const done = Object.values(statusMap).filter(
+          (v) => v === "Concluída",
+        ).length;
+        const total = Object.keys(statusMap).length;
+        const ratio = done / total;
+        const out = document.getElementById("kpi-out");
+        out.innerHTML = "";
+        KPIS.forEach((k, i) => {
+          const fp = Math.min(
+            100,
+            Math.round(ratio * 100 * (0.68 + i * 0.058)),
+          );
+          const cur = Math.round((fp / 100) * k.meta);
+          const card = document.createElement("div");
+          card.className = "kpi-card";
+          card.innerHTML = `
+      <div class="kpi-lbl">${k.l}</div>
+      <div class="kpi-val">${cur}${k.u}</div>
+      <div class="kpi-meta">meta: ${k.meta}${k.u}</div>
+      <div class="kpi-track"><div class="kpi-fill" style="width:${fp}%"></div></div>
+    `;
+          out.appendChild(card);
+        });
+      }
+
+      function buildPleno() {
+        const out = document.getElementById("pleno-out");
+        out.innerHTML = "";
+        PLENO.forEach((p) => {
+          const card = document.createElement("div");
+          card.className = "pleno-card";
+          card.innerHTML = `
+      <div class="pleno-letter">${p.l}</div>
+      <div class="pleno-word">${p.w}</div>
+      <div class="pleno-det">${p.d}</div>
+    `;
+          out.appendChild(card);
+        });
+      }
+
+      /* Toast */
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+      }
+    </script>
+  </body>
+</html>
